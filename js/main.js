@@ -319,13 +319,19 @@ async function currentMonthAPY() {
     '',
     '0xc03841b5135600312707d39eb2af0d2ad5d51a91' // bskt contract address
   );
+  var currentBurned = api.account.tokenbalance(
+    '0x9eabec9576a82036540988eb67407de15aa66d31',
+    '',
+    '0xc03841b5135600312707d39eb2af0d2ad5d51a91' // bskt contract address
+  );
 
-  Promise.all([currentStaked]).then(function (valArray) {
+  Promise.all([currentStaked,currentBurned]).then(function (valArray) {
     let currentPayback = lastMonthBurn;
     let currentStacking = uint256ToToInt(valArray[0].result);
-    const futureApy = (currentPayback / currentStacking / 30) * 365;
+    const futureApy = (currentPayback / currentStacking / daysInCurrentMonth()) * 365;
     const futureApyPercentage = Number(futureApy * 100).toFixed(2);
     document.getElementById('current').innerHTML = '~ ' + futureApyPercentage + '%';
+    document.getElementById('payback').innerHTML = uint256ToToInt(valArray[1].result).toFixed(0).toLocaleString();
   });
 
 
@@ -359,9 +365,6 @@ async function nextMonthAPY() {
   Promise.all([currentBurned, currentStaked]).then(function (valArray) {
     let currentPayback = uint256ToToInt(valArray[0].result);
     let currentStacking = uint256ToToInt(valArray[1].result);
-    document.getElementById('payback').innerHTML = currentPayback.toFixed(0).toLocaleString();
-    document.getElementById('staking').innerHTML = currentStacking.toFixed(0);
-
     var a = new Date();
     var r = a.getDate();
     var relativePayback = (currentPayback / r) * daysInCurrentMonth();
@@ -378,29 +381,33 @@ function calculate(currentPayback, currentStacking) {
 
 async function getCurrentAccount() {
   const accounts = await window.web3.eth.getAccounts();
+  document.getElementById('connect').innerHTML = accounts[0].substring(0,19);
   var supply = api.account.tokenbalance(
     accounts[0],
     '',
     '0xc03841b5135600312707d39eb2af0d2ad5d51a91' // bskt contract address
+    //'0x7777777777697cfeecf846a76326da79cc606517' // xsigma contract address
   );
   supply.then(function (result) {
-    if (uint256ToToInt(result.result).gt(0)) {
+    let tokens = uint256ToToInt(result.result);
+    if (tokens.gt(0)) {
+      document.getElementById('tokens').innerHTML = tokens.toFixed(2) + ' BSKT';
       nextMonthAPY();
     }else{
-      document.getElementById('relativeEstimated').innerHTML = 'Buy BSKT to gain insights' +
-        '.';
-      document.getElementById('payback').innerHTML = 'add bskt to your wallet.';
+      document.getElementById('relativeEstimated').innerHTML = 'add BSKT to unlock';
     }
   })
 }
 
 
 async function load() {
-  await loadWeb3();
-  window.contract = await loadContract();
+  //await loadWeb3();
+  //window.contract = await loadContract();
   //await printTotalSupply();
   await currentMonthAPY();
   document.getElementById("connect").onclick = function () {
+    loadWeb3();
+    window.contract = loadContract();
     getCurrentAccount();
   };
 }
