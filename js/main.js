@@ -310,7 +310,7 @@ async function printTotalSupply() {
 async function currentMonthAPY() {
   // last month burned
 
-  var lastMonthBurn = 290000;
+  var lastMonthBurn = 330066;
   document.getElementById('currentPool').innerHTML = lastMonthBurn;
   // current staked
   // https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0xc03841b5135600312707d39eb2af0d2ad5d51a91&address=0x3c1738eb90405c9806b49a01c14d220b1e61657c&tag=latest&apikey=SH7KH1W76UYTXUJ2WJZQIYKEDB2BNSGXSY
@@ -331,7 +331,7 @@ async function currentMonthAPY() {
     const futureApy = (currentPayback / currentStacking / daysInCurrentMonth()) * 365;
     const futureApyPercentage = Number(futureApy * 100).toFixed(2);
     document.getElementById('current').innerHTML = '~ ' + futureApyPercentage + '%';
-    document.getElementById('payback').innerHTML = uint256ToToInt(valArray[1].result).toFixed(0).toLocaleString();
+    document.getElementById('payback').innerHTML = uint256ToToInt(valArray[1].result).plus(50000).toFixed(0).toLocaleString();
   });
 
 
@@ -367,7 +367,7 @@ async function nextMonthAPY() {
     let currentStacking = uint256ToToInt(valArray[1].result);
     var a = new Date();
     var r = a.getDate();
-    var relativePayback = (currentPayback / r) * daysInCurrentMonth();
+    var relativePayback = ((currentPayback / r) * daysInCurrentMonth()) + 50000;
 
     document.getElementById('relativeEstimated').innerHTML = '~ ' + calculate(relativePayback, currentStacking) + '%';
   });
@@ -395,6 +395,7 @@ async function getCurrentAccount() {
       nextMonthAPY();
     }else{
       document.getElementById('relativeEstimated').innerHTML = 'add BSKT to unlock';
+      //nextMonthAPY();
     }
   })
 }
