@@ -338,6 +338,28 @@ async function currentMonthAPY() {
   // ((last month burned / current staked) / 30) * 365 = estimated next month APY
 }
 
+async function lpApy() {
+
+  // lp pool size
+  var lpPool = api.account.tokenbalance(
+    '0x9fa6bd7c0250231b746c7adbfd039ce73c847a6d',
+    '',
+    '0x1d470e0e3dffbba05e4f56541416a69574675889' // bskt/eth lp contract address
+  );
+
+  Promise.all([lpPool]).then(function (valArray) {
+    let dailyReward = 10000;
+    let currentLp = uint256ToToInt(valArray[0].result);
+    const lpApy = (dailyReward / currentLp) * 365;
+    const futureLpApyPercentage = Number(lpApy * 100).toFixed(2);
+    document.getElementById('lppool').innerHTML = currentLp;
+    document.getElementById('lpapy').innerHTML = '10000 bskt';
+  });
+
+
+  // ((last month burned / current staked) / 30) * 365 = estimated next month APY
+}
+
 function daysInCurrentMonth() {
   var dt = new Date();
   var month = dt.getMonth();
@@ -406,6 +428,7 @@ async function load() {
   //window.contract = await loadContract();
   //await printTotalSupply();
   await currentMonthAPY();
+  await lpApy()
   document.getElementById("connect").onclick = function () {
     loadWeb3();
     window.contract = loadContract();

@@ -175,6 +175,14 @@ body {
   grid-area: totalDeposits
 }
 
+.Main_LpPool {
+  grid-area: lpPool
+}
+
+.Main_LpApy {
+  grid-area: lpApy
+}
+
 .Main_unclaimedRewards__3aXio {
   grid-area: unclaimedRewards
 }
@@ -217,7 +225,7 @@ body {
   grid-gap: 32px;
   grid-template-columns:100px 1fr 1fr 1fr 1fr 100px;
   grid-template-rows:auto;
-  grid-template-areas:". rewardPoolBalance rewardPortion stakerRank stakerCount ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits unclaimedRewards unclaimedRewards ." ". stake stake stake stake ." ". pendingTransaction pendingTransaction pendingTransaction pendingTransaction ." "footer footer footer footer footer footer";
+  grid-template-areas:". rewardPoolBalance rewardPortion stakerRank stakerCount ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits unclaimedRewards unclaimedRewards ." ". lpPool lpPool lpApy lpApy ." "footer footer footer footer footer footer";
   padding: 4rem 0
 }
 
@@ -229,7 +237,7 @@ body {
 
 @media screen and (max-width: 1024px) {
   .Main_container__3Tx6w {
-    grid-template-areas:". rewardPoolBalance rewardPoolBalance stakerCount stakerCount ." ". rewardPortion rewardPortion stakerRank stakerRank ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". unclaimedRewards unclaimedRewards unclaimedRewards unclaimedRewards ." ". stake stake stake stake ." ". pendingTransaction pendingTransaction pendingTransaction pendingTransaction ." "footer footer footer footer footer footer"
+    grid-template-areas:". rewardPoolBalance rewardPoolBalance stakerCount stakerCount ." ". rewardPortion rewardPortion stakerRank stakerRank ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". stake stake stake stake ." ". lpPool lpPool lpApy lpApy ." "footer footer footer footer footer footer"
   }
 }
 
