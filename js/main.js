@@ -310,7 +310,7 @@ async function printTotalSupply() {
 async function currentMonthAPY() {
   // last month burned
 
-  var lastMonthBurn = 330066;
+  var lastMonthBurn = 235619;
   document.getElementById('currentPool').innerHTML = lastMonthBurn;
   // current staked
   // https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0xc03841b5135600312707d39eb2af0d2ad5d51a91&address=0x3c1738eb90405c9806b49a01c14d220b1e61657c&tag=latest&apikey=SH7KH1W76UYTXUJ2WJZQIYKEDB2BNSGXSY
