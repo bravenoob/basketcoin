@@ -187,16 +187,8 @@ body {
   grid-area: unclaimedRewards
 }
 
-.Main_stake__xBuIF {
-  grid-area: stake
-}
-
 .Main_pendingTransaction__U2QDl {
   grid-area: pendingTransaction
-}
-
-.Main_stakerCount__3huvx {
-  grid-area: stakerCount
 }
 
 .Main_rewardPortion__2tAVE {
@@ -237,13 +229,13 @@ body {
 
 @media screen and (max-width: 1024px) {
   .Main_container__3Tx6w {
-    grid-template-areas:". rewardPoolBalance rewardPoolBalance stakerCount stakerCount ." ". rewardPortion rewardPortion stakerRank stakerRank ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". stake stake stake stake ." ". lpPool lpPool lpApy lpApy ." "footer footer footer footer footer footer"
+    grid-template-areas:". rewardPoolBalance rewardPoolBalance stakerCount stakerCount ." ". rewardPortion rewardPortion stakerRank stakerRank ." ". rewardPool rewardPool totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". lpPool lpPool lpApy lpApy ." "footer footer footer footer footer footer"
   }
 }
 
 @media screen and (max-width: 500px) {
   .Main_container__3Tx6w {
-    grid-template-areas:". rewardPoolBalance rewardPoolBalance rewardPoolBalance rewardPoolBalance ." ". stakerCount stakerCount stakerCount stakerCount ." ". stakerRank stakerRank stakerRank stakerRank ." ". rewardPool rewardPool rewardPool rewardPool ." ". totalBurned totalBurned totalBurned totalBurned ." ". totalFrozen totalFrozen totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". unclaimedRewards unclaimedRewards unclaimedRewards unclaimedRewards ." ". stake stake stake stake ." ". pendingTransaction pendingTransaction pendingTransaction pendingTransaction ." "footer footer footer footer footer footer"
+    grid-template-areas:". rewardPoolBalance rewardPoolBalance rewardPoolBalance rewardPoolBalance ." ". rewardPool rewardPool rewardPool rewardPool ." ". totalBurned totalBurned totalBurned totalBurned ." ". totalFrozen totalFrozen totalFrozen totalFrozen ." ". totalDeposits totalDeposits totalDeposits totalDeposits ." ". unclaimedRewards unclaimedRewards unclaimedRewards unclaimedRewards ." ". lpPool lpPool lpPool lpPool . " ". lpApy lpApy lpApy lpApy ." "footer footer footer footer footer footer"
   }
 }
 
