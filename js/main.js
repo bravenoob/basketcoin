@@ -384,8 +384,8 @@ async function bsktValue() {
     (data.data['basketcoin'].usd * 423736);
 
   let finalPrice = backedValue / 2100000;
-  document.getElementById('lppool').innerHTML = backedValue;
-  document.getElementById('lpapy').innerHTML = '1 bskt = ' + Number(finalPrice).toFixed(2);
+  document.getElementById('lppool').innerHTML = '$'+ Number(backedValue).toFixed(0);
+  document.getElementById('lpapy').innerHTML = '1 bskt = $' + Number(finalPrice).toFixed(2);
 }
 
 function daysInCurrentMonth() {
