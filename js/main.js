@@ -2,6 +2,9 @@ import 'regenerator-runtime/runtime';
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
 
+const CoinGecko = require('coingecko-api');
+
+const CoinGeckoClient = new CoinGecko();
 const api = require('etherscan-api').init('SH7KH1W76UYTXUJ2WJZQIYKEDB2BNSGXSY');
 
 async function loadWeb3() {
@@ -310,7 +313,7 @@ async function printTotalSupply() {
 async function currentMonthAPY() {
   // last month burned
 
-  var lastMonthBurn = 90924;
+  var lastMonthBurn = 90182;
   document.getElementById('currentPool').innerHTML = lastMonthBurn;
   // current staked
   // https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0xc03841b5135600312707d39eb2af0d2ad5d51a91&address=0x3c1738eb90405c9806b49a01c14d220b1e61657c&tag=latest&apikey=SH7KH1W76UYTXUJ2WJZQIYKEDB2BNSGXSY
@@ -325,7 +328,7 @@ async function currentMonthAPY() {
     '0xc03841b5135600312707d39eb2af0d2ad5d51a91' // bskt contract address
   );
 
-  Promise.all([currentStaked,currentBurned]).then(function (valArray) {
+  Promise.all([currentStaked, currentBurned]).then(function (valArray) {
     let currentPayback = lastMonthBurn;
     let currentStacking = uint256ToToInt(valArray[0].result);
     const futureApy = (currentPayback / currentStacking / daysInCurrentMonth()) * 365;
@@ -355,9 +358,34 @@ async function lpApy() {
     document.getElementById('lppool').innerHTML = currentLp;
     document.getElementById('lpapy').innerHTML = '10000 bskt';
   });
+}
 
+async function bsktValue() {
 
-  // ((last month burned / current staked) / 30) * 365 = estimated next month APY
+  let data = await CoinGeckoClient.simple.price({
+    ids: ['bitcoin', 'ethereum', 'polkadot', 'smartkey', 'yfdai-finance', 'usd-coin', 'basketcoin'],
+    vs_currencies: ['usd'],
+  });
+
+  // 10,75 BTC
+  // 300 ETH
+  // 6 000 DOT
+  // 850 000 SKEY
+  // 42 YF-DAI
+  // 245 000 USDC
+  // 423 736 BSKT
+
+  let backedValue = (data.data['bitcoin'].usd * 10.75) +
+    (data.data['ethereum'].usd * 300) +
+    (data.data['polkadot'].usd * 6000) +
+    (data.data['smartkey'].usd * 850000) +
+    (data.data['yfdai-finance'].usd * 42) +
+    (data.data['usd-coin'].usd * 245000) +
+    (data.data['basketcoin'].usd * 423736);
+
+  let finalPrice = backedValue / 2100000;
+  document.getElementById('lppool').innerHTML = backedValue;
+  document.getElementById('lpapy').innerHTML = '1 bskt = ' + Number(finalPrice).toFixed(2);
 }
 
 function daysInCurrentMonth() {
@@ -403,7 +431,7 @@ function calculate(currentPayback, currentStacking) {
 
 async function getCurrentAccount() {
   const accounts = await window.web3.eth.getAccounts();
-  document.getElementById('connect').innerHTML = accounts[0].substring(0,19);
+  document.getElementById('connect').innerHTML = accounts[0].substring(0, 19);
   var supply = api.account.tokenbalance(
     accounts[0],
     '',
@@ -415,7 +443,7 @@ async function getCurrentAccount() {
     if (tokens.gt(0)) {
       document.getElementById('tokens').innerHTML = tokens.toFixed(2) + ' BSKT';
       nextMonthAPY();
-    }else{
+    } else {
       document.getElementById('relativeEstimated').innerHTML = 'add BSKT to unlock';
       //nextMonthAPY();
     }
@@ -428,7 +456,7 @@ async function load() {
   //window.contract = await loadContract();
   //await printTotalSupply();
   await currentMonthAPY();
-  await lpApy()
+  await bsktValue();
   document.getElementById("connect").onclick = function () {
     loadWeb3();
     window.contract = loadContract();
